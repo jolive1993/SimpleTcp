@@ -8,27 +8,27 @@ using System.IO;
 
 namespace SimpleTcp
 {
-    public class TcpOrWhat
+    public class TcpOrWhat<T>
     {
         public byte[] myBytes;
-        public TcpOrWhat(Object obj)
+        public TcpOrWhat(T thing)
         {
             BinaryFormatter bf = new BinaryFormatter();
             using (var ms = new MemoryStream())
             {
-                bf.Serialize(ms, obj);
+                bf.Serialize(ms, thing);
                 myBytes = ms.ToArray();
             }
         }
-        public Object ByteArrayToObject(byte[] arrBytes)
+        public T ByteArrayDeserialize(byte[] arrBytes)
         {
             using (var memStream = new MemoryStream())
             {
                 var binForm = new BinaryFormatter();
                 memStream.Write(arrBytes, 0, arrBytes.Length);
                 memStream.Seek(0, SeekOrigin.Begin);
-                var obj = binForm.Deserialize(memStream);
-                return obj;
+                var result = (T)binForm.Deserialize(memStream);
+                return result;
             }
         }
     }

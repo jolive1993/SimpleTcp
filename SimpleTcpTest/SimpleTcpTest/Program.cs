@@ -14,11 +14,15 @@ namespace SimpleTcpTest
             Guy me = new Guy();
             me.name = "cool";
             me.coolness = 7000;
-            TcpOrWhat byteMan = new TcpOrWhat(me);
+            TcpOrWhat<Object> byteMan = new TcpOrWhat<object>(me);
             Console.WriteLine(byteMan.myBytes);
-            var awesome = byteMan.ByteArrayToObject(byteMan.myBytes);
+            var awesome = byteMan.ByteArrayDeserialize(byteMan.myBytes);
             var cool = (Guy)awesome;
-            Console.WriteLine(cool.name);
+            Console.WriteLine(cool.coolness);
+            string manguy = "whatever";
+            TcpOrWhat<String> bytemaner = new TcpOrWhat<string>(manguy);
+            var shit = bytemaner.ByteArrayDeserialize(bytemaner.myBytes);
+            Console.WriteLine(shit);
             Console.ReadLine();
         }
     }
