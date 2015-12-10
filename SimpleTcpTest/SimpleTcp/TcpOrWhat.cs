@@ -5,29 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Collections;
 
 namespace SimpleTcp
 {
     public class TcpOrWhat<T>
     {
         public byte[] myBytes;
-        public TcpOrWhat(T thing)
+        private BinaryFormatter formatter = new BinaryFormatter();
+        public TcpOrWhat()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
+        }
+        public byte[] byteSerial(T thing)
+        {
+            using (var memStream = new MemoryStream())
             {
-                bf.Serialize(ms, thing);
-                myBytes = ms.ToArray();
+                byte[] result;
+                formatter.Serialize(memStream, thing);
+                result = memStream.ToArray();
+                return result;
             }
         }
         public T ByteArrayDeserialize(byte[] arrBytes)
         {
             using (var memStream = new MemoryStream())
             {
-                var binForm = new BinaryFormatter();
                 memStream.Write(arrBytes, 0, arrBytes.Length);
                 memStream.Seek(0, SeekOrigin.Begin);
-                var result = (T)binForm.Deserialize(memStream);
+                var result = (T)formatter.Deserialize(memStream);
                 return result;
             }
         }

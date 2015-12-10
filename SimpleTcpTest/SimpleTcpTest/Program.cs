@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleTcp;
+using System.Collections;
+using System.Reflection;
 
 namespace SimpleTcpTest
 {
@@ -11,18 +13,19 @@ namespace SimpleTcpTest
     {
         static void Main(string[] args)
         {
-            Guy me = new Guy();
-            me.name = "cool";
-            me.coolness = 7000;
-            TcpOrWhat<Object> byteMan = new TcpOrWhat<object>(me);
-            Console.WriteLine(byteMan.myBytes);
-            var awesome = byteMan.ByteArrayDeserialize(byteMan.myBytes);
-            var cool = (Guy)awesome;
-            Console.WriteLine(cool.coolness);
-            string manguy = "whatever";
-            TcpOrWhat<String> bytemaner = new TcpOrWhat<string>(manguy);
-            var shit = bytemaner.ByteArrayDeserialize(bytemaner.myBytes);
-            Console.WriteLine(shit);
+            TcpHeader header = new TcpHeader();
+            header.sourcePort = 0;
+            header.destinationPort = 0;
+            header.sequenceNumber = 0;
+            header.ackNumber = 0;
+            //header.offset
+            //header.reserved
+            header.windowSize = 0;
+            header.checkSum = 0;
+            header.urgentPointer = 0;
+            SuperSerial superserial = new SuperSerial();
+            byte[] whatever = superserial.serializeTcpHeader(header);
+            Console.WriteLine(whatever.Length);
             Console.ReadLine();
         }
     }

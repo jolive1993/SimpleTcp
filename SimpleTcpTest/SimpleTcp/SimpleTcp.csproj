@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BytesBits.cs" />
     <Compile Include="Guy.cs" />
+    <Compile Include="IpHeader.cs" />
+    <Compile Include="SuperSerial.cs" />
+    <Compile Include="TcpHeader.cs" />
+    <Compile Include="TcpOptions.cs" />
     <Compile Include="TcpOrWhat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
