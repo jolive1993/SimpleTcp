@@ -28,5 +28,23 @@ namespace SimpleTcp
         public ushort checkSum { get; set; }
         public ushort urgentPointer { get; set; }
         public byte[] data { get; set; }
+        public void setOffset(int id)
+        {
+            switch(id)
+            {
+                case 5:
+                    offset.Set(0, false);
+                    offset.Set(1, true);
+                    offset.Set(2, false);
+                    offset.Set(3, true);
+                    break;
+                default:
+                    offset.Set(0, false);
+                    offset.Set(1, true);
+                    offset.Set(2, false);
+                    offset.Set(3, true);
+                    break;
+            }
+        }
     }
 }

@@ -12,9 +12,9 @@ namespace SimpleTcp
         public byte[] packetBytes;
         public TcpHeader header;
         public IpHeader iheader;
+        SuperSerial superserial = new SuperSerial();
         public Packet(byte[] tcpPayLoad)
         {
-            SuperSerial superserial = new SuperSerial();
             header = new TcpHeader();
             iheader = new IpHeader();
             header.sourcePort = 0;
@@ -24,19 +24,22 @@ namespace SimpleTcp
             header.windowSize = 0;
             header.checkSum = 0;
             header.urgentPointer = 0;
-            header.NS.Set(0, true);
-            header.ECE.Set(0, true);
             header.data = tcpPayLoad;
-            byte[] tcpHeaderBytes = superserial.serializeTcpHeader(header);
+            iheader.setVersion("ip4");
+            iheader.setIHL(5);
             iheader.typeOfService = 0;
             iheader.totalLength = 0;
             iheader.identification = 0;
-            iheader.timeToLive = 0;
-            iheader.protocol = 0;
+            iheader.timeToLive = 20;
+            iheader.protocol = 6;
             iheader.checksum = 0;
             iheader.sourceAdress = 0;
             iheader.destinationAdress = 0;
             iheader.optionsPadding = 0;
+        }
+        public void execute()
+        {
+            byte[] tcpHeaderBytes = superserial.serializeTcpHeader(header);
             iheader.data = tcpHeaderBytes;
             packetBytes = superserial.serializeIpHeader(iheader);
         }

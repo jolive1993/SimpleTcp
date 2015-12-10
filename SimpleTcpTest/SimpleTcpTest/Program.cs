@@ -14,7 +14,7 @@ namespace SimpleTcpTest
         static void Main(string[] args)
         {
             Guy guy = new Guy();
-            PacketGroup<Guy> pguy = new PacketGroup<Guy>(guy);
+            PacketGroup<Guy> pguy = new PacketGroup<Guy>(guy, 1270001, 1270001, 10, 10);
             foreach (Packet p in pguy.packets)
             {
                 Console.WriteLine(p.packetBytes.Length);
