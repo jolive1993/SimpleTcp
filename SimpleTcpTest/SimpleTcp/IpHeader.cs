@@ -8,26 +8,23 @@ using System.Collections;
 
 namespace SimpleTcp
 {
-    class IpHeader
+    public class IpHeader
     {
-        BitArray version = new BitArray(4);
-        BitArray ihl = new BitArray(4);
-        byte typeOfService;
-        ushort totalLength;
-        ushort identification;
-        bool reservedFlag;
-        bool dontFragFlag;
-        bool moreFragFlag;
-        BitArray fragmentOffset = new BitArray(13);
-        byte timeToLive;
-        byte protocol;
-        ushort checksum;
-        int sourceAdress;
-        int destinationAdress;
-        int optionsPadding;
-
-
-
-
+        public BitArray version = new BitArray(4);
+        public BitArray ihl = new BitArray(4);
+        public byte typeOfService { get; set; }
+        public ushort totalLength { get; set; }
+        public ushort identification { get; set; }
+        public BitArray reservedFlag = new BitArray(1);
+        public BitArray dontFragFlag = new BitArray(1);
+        public BitArray moreFragFlag = new BitArray(1);
+        public BitArray fragmentOffset = new BitArray(13);
+        public byte timeToLive { get; set; }
+        public byte protocol { get; set; }
+        public ushort checksum { get; set; }
+        public int sourceAdress { get; set; }
+        public int destinationAdress { get; set; }
+        public int optionsPadding { get; set; }
+        public byte[] data { get; set; }
     }
 }

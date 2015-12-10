@@ -27,5 +27,6 @@ namespace SimpleTcp
         public ushort windowSize { get; set; }
         public ushort checkSum { get; set; }
         public ushort urgentPointer { get; set; }
+        public byte[] data { get; set; }
     }
 }

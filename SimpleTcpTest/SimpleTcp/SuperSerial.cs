@@ -10,11 +10,10 @@ namespace SimpleTcp
 {
     public class SuperSerial
     {
-        public byte[] fullTcp;
-        public byte[] flagsAndStuff = new byte[2];
         public byte[] serializeTcpHeader(TcpHeader header)
         {
-
+            byte[] fullTcp;
+            byte[] flagsAndStuff = new byte[2];
             fullTcp = BitConverter.GetBytes(header.sourcePort);
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.destinationPort));
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.sequenceNumber));
@@ -35,8 +34,43 @@ namespace SimpleTcp
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.windowSize));
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.checkSum));
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.urgentPointer));
-            Console.WriteLine(fullTcp.Length);
+            fullTcp = BytesBits.combineBytes(fullTcp, header.data);
             return fullTcp;
+        }
+        public byte[] serializeIpHeader(IpHeader header)
+        {
+            byte[] fullIp;
+            byte[] versionIhl = new byte[1];
+            byte[] flagsAndOffset = new byte[2];
+            BitArray versionIhlbit = header.version;
+            versionIhlbit = BytesBits.combineBits(versionIhlbit, header.ihl);
+            versionIhlbit.CopyTo(versionIhl, 0);
+            fullIp = versionIhl;
+            byte[] typeOfService = new byte[1];
+            BitArray typeOfServiceBits = new BitArray(header.typeOfService);
+            typeOfServiceBits.CopyTo(typeOfService, 0);
+            fullIp = BytesBits.combineBytes(fullIp, typeOfService);
+            fullIp = BytesBits.combineBytes(fullIp, BitConverter.GetBytes(header.totalLength));
+            fullIp = BytesBits.combineBytes(fullIp, BitConverter.GetBytes(header.identification));
+            BitArray flagsOffset = header.reservedFlag;
+            flagsOffset = BytesBits.combineBits(flagsOffset, header.dontFragFlag);
+            flagsOffset = BytesBits.combineBits(flagsOffset, header.moreFragFlag);
+            flagsOffset = BytesBits.combineBits(flagsOffset, header.fragmentOffset);
+            flagsOffset.CopyTo(flagsAndOffset, 0);
+            fullIp = BytesBits.combineBytes(fullIp, flagsAndOffset);
+            byte[] timeToLive = new byte[1];
+            BitArray timeToLiveBits = new BitArray(header.timeToLive);
+            timeToLiveBits.CopyTo(timeToLive, 0);
+            fullIp = BytesBits.combineBytes(fullIp, timeToLive);
+            byte[] protocol = new byte[1];
+            BitArray protocolBits = new BitArray(header.protocol);
+            protocolBits.CopyTo(protocol, 0);
+            fullIp = BytesBits.combineBytes(fullIp, protocol);
+            fullIp = BytesBits.combineBytes(fullIp, BitConverter.GetBytes(header.checksum));
+            fullIp = BytesBits.combineBytes(fullIp, BitConverter.GetBytes(header.sourceAdress));
+            fullIp = BytesBits.combineBytes(fullIp, BitConverter.GetBytes(header.destinationAdress));
+            fullIp = BytesBits.combineBytes(fullIp, header.data);
+            return fullIp;
         }
     }
 }
