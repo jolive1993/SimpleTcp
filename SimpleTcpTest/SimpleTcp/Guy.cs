@@ -12,8 +12,10 @@ namespace SimpleTcp
         public string name { get; set; }
         public int age { get; set; }
         public int coolness { get; set; }
+        public List<long> longs;
         public Guy()
         {
+            longs = new List<long>(9000);
         }
     }
 }

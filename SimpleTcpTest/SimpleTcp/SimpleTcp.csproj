@@ -43,6 +43,8 @@
     <Compile Include="BytesBits.cs" />
     <Compile Include="Guy.cs" />
     <Compile Include="IpHeader.cs" />
+    <Compile Include="Packet.cs" />
+    <Compile Include="PacketGroup.cs" />
     <Compile Include="SuperSerial.cs" />
     <Compile Include="TcpHeader.cs" />
     <Compile Include="TcpOptions.cs" />
