@@ -89,12 +89,12 @@ namespace SimpleTcp
             length = payload.Length;
             while (length > 0)
             {
-                if (length > 1452)
+                if (length > 1400)
                 {
-                    byte[] splitPayload = new byte[1452];
-                    Array.Copy(payload, 0, splitPayload, 0, 1452);
+                    byte[] splitPayload = new byte[1400];
+                    Array.Copy(payload, 0, splitPayload, 0, 1400);
                     Packet p = new Packet(splitPayload);
-                    p.iheader.totalLength = 1452;
+                    p.iheader.totalLength = 1400;
                     p.iheader.checksum = 10;
                     p.iheader.sourceAdress = sourceip;
                     p.iheader.destinationAdress = destinationip;
@@ -105,10 +105,10 @@ namespace SimpleTcp
                     p.header.sequenceNumber = sequence;
                     p.execute();
                     packets.Add(p);
-                    byte[] trimmedPayLoad = new byte[payload.Length - 1452];
-                    Array.Copy(payload, 1451, trimmedPayLoad, 0, payload.Length - 1452);
+                    byte[] trimmedPayLoad = new byte[payload.Length - 1400];
+                    Array.Copy(payload, 1399, trimmedPayLoad, 0, payload.Length - 1400);
                     payload = trimmedPayLoad;
-                    length -= 1452;
+                    length -= 1400;
                 }
                 else
                 {

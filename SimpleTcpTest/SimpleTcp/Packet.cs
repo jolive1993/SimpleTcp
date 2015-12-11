@@ -21,7 +21,7 @@ namespace SimpleTcp
             header.destinationPort = 0;
             header.sequenceNumber = 0;
             header.ackNumber = 0;
-            header.windowSize = 0;
+            header.windowSize = 5;
             header.checkSum = 0;
             header.urgentPointer = 0;
             header.data = tcpPayLoad;
@@ -43,6 +43,8 @@ namespace SimpleTcp
             header.checkSum = Crc16.ComputeChecksum(tcpHeaderBytes);
             iheader.data = tcpHeaderBytes;
             packetBytes = superserial.serializeIpHeader(iheader);
+            //packetBytes = superserial.serializeTcpHeader(header);
+
         }
     }
 }

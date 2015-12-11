@@ -13,7 +13,7 @@ namespace SimpleTcp
         public byte[] serializeTcpHeader(TcpHeader header)
         {
             byte[] fullTcp;
-            byte[] flagsAndStuff = new byte[2];
+            byte[] flagsAndStuff = new byte[2] { 160, 0 };
             fullTcp = BitConverter.GetBytes(header.sourcePort);
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.destinationPort));
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.sequenceNumber));
@@ -29,7 +29,7 @@ namespace SimpleTcp
             offsetReservedFlags = BytesBits.combineBits(offsetReservedFlags, header.RST);
             offsetReservedFlags = BytesBits.combineBits(offsetReservedFlags, header.SYN);
             offsetReservedFlags = BytesBits.combineBits(offsetReservedFlags, header.FIN);
-            offsetReservedFlags.CopyTo(flagsAndStuff, 0);
+            //offsetReservedFlags.CopyTo(flagsAndStuff, 0);
             fullTcp = BytesBits.combineBytes(fullTcp, flagsAndStuff);
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.windowSize));
             fullTcp = BytesBits.combineBytes(fullTcp, BitConverter.GetBytes(header.checkSum));
@@ -43,11 +43,11 @@ namespace SimpleTcp
         public byte[] serializeIpHeader(IpHeader header)
         {
             byte[] fullIp;
-            byte[] versionIhl = new byte[1];
+            byte[] versionIhl = new byte[1] { 69 };
             byte[] flagsAndOffset = new byte[2];
             BitArray versionIhlbit = header.version;
             versionIhlbit = BytesBits.combineBits(versionIhlbit, header.ihl);
-            versionIhlbit.CopyTo(versionIhl, 0);
+            //versionIhlbit.CopyTo(versionIhl, 0)
             fullIp = versionIhl;
             byte[] typeOfService = new byte[1] { header.typeOfService };
             fullIp = BytesBits.combineBytes(fullIp, typeOfService);
