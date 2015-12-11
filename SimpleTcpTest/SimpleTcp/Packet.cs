@@ -40,6 +40,7 @@ namespace SimpleTcp
         public void execute()
         {
             byte[] tcpHeaderBytes = superserial.serializeTcpHeader(header);
+            header.checkSum = Crc16.ComputeChecksum(tcpHeaderBytes);
             iheader.data = tcpHeaderBytes;
             packetBytes = superserial.serializeIpHeader(iheader);
         }

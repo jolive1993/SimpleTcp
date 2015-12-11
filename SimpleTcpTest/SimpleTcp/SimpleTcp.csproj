@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BytesBits.cs" />
+    <Compile Include="Crc!6.cs" />
     <Compile Include="Guy.cs" />
     <Compile Include="IpHeader.cs" />
     <Compile Include="Packet.cs" />
